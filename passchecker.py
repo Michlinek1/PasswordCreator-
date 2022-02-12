@@ -1,10 +1,13 @@
+#from AlgorytmPass import Algorytm
 from tkinter import *
 import os.path
 import datetime
 import csv
 import secrets
 import string
-import keyboard
+
+
+
 
 
 if os.path.exists("Hasla.csv"):
@@ -28,8 +31,9 @@ e.pack()
 e.insert(0, "Lenght of the password:")
 
 
-def Clear():
+def Exit():
     root.destroy()
+    print("You have closed the program!")
 r = StringVar()
 Radiobutton(root, text= "Password without numbers", variable=r,value = "Pass without numbers").pack()
 Radiobutton(root, text="Password without alphabet", variable=r, value = "Pass without alphabet").pack()
@@ -41,42 +45,78 @@ def Generate():
             newWindow = Toplevel(root)
             newWindow.title("Pass")
             newWindow.geometry("200x200")
-            for i in range(5):
-                alphabet = string.ascii_letters + string.punctuation
-                Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
-                label = Label(newWindow, text = f"Password:{Pass}")
-                label.pack()
+            try:
+                for i in range(5):
+                    alphabet = string.ascii_letters + string.punctuation
+                    Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
+                    label = Label(newWindow, text = f"Password:{Pass}")
+                    label.pack()
+            except(ValueError):
+                e.delete(0, END)
+                e.insert(0, "Please, try again!")
+                newWindow.destroy()
 
 
     elif str(r.get()) == "Pass without alphabet":
             newWindow = Toplevel(root)
             newWindow.title("Pass")
             newWindow.geometry("200x200")
-            for i in range(5):
-                alphabet = string.digits + string.punctuation
-                Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
-                label = Label(newWindow, text = f"Password: {Pass}")
-                label.pack()
-
+            try:
+                for i in range(5):
+                    alphabet = string.digits + string.punctuation
+                    Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
+                    label = Label(newWindow, text = f"Password: {Pass}")
+                    label.pack()
+            except(ValueError):
+                e.delete(0, END)
+                e.insert(0, "Please, try again!")
+                newWindow.destroy()
     elif str(r.get()) =="Pass without special characters":
             newWindow = Toplevel(root)
             newWindow.title("Pass")
             newWindow.geometry("200x200")
-            for i in range(5):
-                alphabet = string.ascii_letters + string.digits 
-                Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
-                label = Label(newWindow, text = f"Password: {Pass}")
-                label.pack()
+            try:
+                for i in range(5):
+                    alphabet = string.ascii_letters + string.digits 
+                    Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
+                    label = Label(newWindow, text = f"Password: {Pass}")
+                    label.pack()
+            except(ValueError):
+                e.delete(0, END)
+                e.insert(0, "Please, try again!")
+                newWindow.destroy()
 
     elif str(r.get()) =="Pass with everything":
             newWindow = Toplevel(root)
             newWindow.title("Pass")
             newWindow.geometry("200x200")
-            for i in range(5):
-                alphabet = string.ascii_letters + string.digits + string.punctuation 
-                Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
-                label = Label(newWindow, text = f"Password: {Pass}")
-                label.pack()
+            try:
+                for i in range(5):
+                    alphabet = string.ascii_letters + string.digits + string.punctuation 
+                    Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
+                    label = Label(newWindow, text = f"Password: {Pass}")
+                    label.pack()
+            except(ValueError):
+                e.delete(0, END)
+                e.insert(0, "Please, try again!")
+                newWindow.destroy()
+def Algorytm():
+    global newWindow
+    global e1
+    global liczby, cyfry, spacje
+    lenght = len(e1.get()) # dlugosc hasla
+    label1 = label = Label(newWindow, text = f"Lenght of the pass: {lenght}")
+    label1.pack()
+    liczby = sum(n.isdigit() for n in e1.get()) #sprawdza z ilu liczb sklada sie haslo
+    cyfry = sum(n.isalpha() for n in e1.get()) #sprawdza z ilu cyfr sklada sie haslo
+    label2 = Label(newWindow, text = f"Amount of numbers {liczby}")
+    label2.pack()
+    label3 = Label(newWindow, text = f"Amount of letters: {cyfry}")
+    label3.pack()
+    spacje = sum(n.isspace() for n in e1.get()) #sprawdza z ilu slow sklada sie haslo
+    label4 = Label(newWindow, text = f"Amount of spaces: {spacje }")
+    label4.pack()
+   
 
 
 
@@ -86,16 +126,15 @@ def PassCheck():
     global e1
     newWindow = Toplevel(root)
     newWindow.title("Pass Checker")
-    newWindow.geometry("200x200")
+    newWindow.geometry("600x600")
     e1 = Entry(newWindow, width=600, borderwidth=2 )
     e1.pack()
     e1.insert(0, "Write down your pass:")
-    Check = Button(newWindow,text = "Start checking!", padx = 100, pady = 20, command = Checker).pack()
+    Button(newWindow,text = "Start checking!", padx = 100, pady = 20, command = Checker).pack()
 
 def Checker(): 
-        lenght = len(e1.get())
-        label1 = label = Label(newWindow, text = f"Lenght of the pass: {lenght}")
-        label.pack()
+        
+        Algorytm()
         if len(e1.get()) >= 20:
             label2 = Label(newWindow, text = "Overall grade: Excelent!")
             label2.pack()
@@ -107,18 +146,23 @@ def Checker():
         elif len(e1.get()) >= 10:
             label2 = Label(newWindow, text = "Overall grade: Good!")
             label2.pack()
-         
+        
         else:
             label2 = Label(newWindow, text = "Overall grade: Bad!")
             label2.pack()
+        if len(e1.get()) ==0:
+            print("An unexpected error has occured!")
+            newWindow.destroy()
+
        
 
 
 
 
-Generate = Button(root, text="Generate Password",background = "RED", foreground="white", padx = 100, pady = 20, command=Generate).pack()
-Clear = Button(root, text="Clear out!",background = "GREEN", foreground="white", padx = 125, pady = 20,  command=Clear).pack()
+Generate = Button(root, text="Generate Password",background = "RED", foreground="white", padx = 101, pady = 20, command=Generate).pack()
 Checking = Button(root, text="Password checker",background = "ORANGE", foreground="white", padx = 104, pady = 20, command=PassCheck).pack()
+Exit = Button(root, text="Exit!",background = "GREEN", foreground="white", padx = 140, pady = 20,  command=Exit).pack()
+
 
 
 
