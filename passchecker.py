@@ -18,6 +18,7 @@ else:
  
 
 root = Tk()
+print("Logs:")
 root.title("Password Generator")
 currenttime = datetime.datetime.now().replace(microsecond=0)
 currenttimecsv = (f"Program opened at {currenttime}").split(",")
@@ -51,7 +52,9 @@ def Generate():
                     Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
                     label = Label(newWindow, text = f"Password:{Pass}")
                     label.pack()
+                    print("You just generated a password!")
             except(ValueError):
+                print("Something wrong happened!")
                 e.delete(0, END)
                 e.insert(0, "Please, try again!")
                 newWindow.destroy()
@@ -67,7 +70,9 @@ def Generate():
                     Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
                     label = Label(newWindow, text = f"Password: {Pass}")
                     label.pack()
+                    print("You just generated a password!")
             except(ValueError):
+                print("Something wrong happened!")
                 e.delete(0, END)
                 e.insert(0, "Please, try again!")
                 newWindow.destroy()
@@ -81,7 +86,9 @@ def Generate():
                     Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
                     label = Label(newWindow, text = f"Password: {Pass}")
                     label.pack()
+                    print("You just generated a password!")
             except(ValueError):
+                print("Something wrong happened!")
                 e.delete(0, END)
                 e.insert(0, "Please, try again!")
                 newWindow.destroy()
@@ -96,7 +103,9 @@ def Generate():
                     Pass = ''.join(secrets.choice(alphabet) for i in range(int(e.get())))
                     label = Label(newWindow, text = f"Password: {Pass}")
                     label.pack()
+                    print("You just generated a password!")
             except(ValueError):
+                print("Something wrong happened!")
                 e.delete(0, END)
                 e.insert(0, "Please, try again!")
                 newWindow.destroy()
@@ -138,18 +147,22 @@ def Checker():
         if len(e1.get()) >= 20:
             label2 = Label(newWindow, text = "Overall grade: Excelent!")
             label2.pack()
+            print("You just checked your password!")
       
         elif len(e1.get()) >= 15:
             label2 = Label(newWindow, text = "Overall grade: Great!")
             label2.pack()
+            print("You just checked your password!")
         
         elif len(e1.get()) >= 10:
             label2 = Label(newWindow, text = "Overall grade: Good!")
             label2.pack()
+            print("You just checked your password!")
         
         else:
             label2 = Label(newWindow, text = "Overall grade: Bad!")
             label2.pack()
+            print("You just checked your password!")
         if len(e1.get()) ==0:
             print("An unexpected error has occured!")
             newWindow.destroy()
